@@ -1,6 +1,6 @@
 package com.barteksmalec.sfgrecipeproject.controllers;
 
-import com.barteksmalec.sfgrecipeproject.service.RecipeService;
+import com.barteksmalec.sfgrecipeproject.services.RecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;

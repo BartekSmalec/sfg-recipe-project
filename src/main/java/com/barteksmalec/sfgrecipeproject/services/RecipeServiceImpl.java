@@ -1,4 +1,4 @@
-package com.barteksmalec.sfgrecipeproject.service;
+package com.barteksmalec.sfgrecipeproject.services;
 
 import com.barteksmalec.sfgrecipeproject.model.Recipe;
 import com.barteksmalec.sfgrecipeproject.repositories.RecipeRepository;
