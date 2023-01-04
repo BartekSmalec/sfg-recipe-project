@@ -1,5 +1,8 @@
 package com.barteksmalec.sfgrecipeproject.services;
 
+import com.barteksmalec.sfgrecipeproject.commands.RecipeCommand;
+import com.barteksmalec.sfgrecipeproject.converters.RecipeCommandToRecipe;
+import com.barteksmalec.sfgrecipeproject.converters.RecipeToRecipeCommand;
 import com.barteksmalec.sfgrecipeproject.model.Recipe;
 import com.barteksmalec.sfgrecipeproject.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -14,9 +17,13 @@ import java.util.Set;
 public class RecipeServiceImpl implements RecipeService {
 
     private final RecipeRepository recipeRepository;
+    private final RecipeCommandToRecipe recipeCommandToRecipe;
+    private final RecipeToRecipeCommand recipeToRecipeCommand;
 
-    public RecipeServiceImpl(RecipeRepository recipeRepository) {
+    public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeCommandToRecipe recipeCommandToRecipe, RecipeToRecipeCommand recipeToRecipeCommand) {
         this.recipeRepository = recipeRepository;
+        this.recipeCommandToRecipe = recipeCommandToRecipe;
+        this.recipeToRecipeCommand = recipeToRecipeCommand;
     }
 
     @Override
@@ -34,5 +41,13 @@ public class RecipeServiceImpl implements RecipeService {
         if(!optionalRecipe.isPresent()) throw new RuntimeException("Recipe not found");
 
         return optionalRecipe.get();
+    }
+
+    @Override
+    public RecipeCommand saveRecipeCommand(RecipeCommand command) {
+        Recipe detachedRecipe = recipeCommandToRecipe.convert(command);
+        Recipe savedRcipe =  recipeRepository.save(detachedRecipe);
+        log.debug("Saved recipe id " + savedRcipe.getId());
+        return recipeToRecipeCommand.convert(savedRcipe);
     }
 }

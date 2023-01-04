@@ -1,5 +1,7 @@
 package com.barteksmalec.sfgrecipeproject.services;
 
+import com.barteksmalec.sfgrecipeproject.converters.RecipeCommandToRecipe;
+import com.barteksmalec.sfgrecipeproject.converters.RecipeToRecipeCommand;
 import com.barteksmalec.sfgrecipeproject.model.Recipe;
 import com.barteksmalec.sfgrecipeproject.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,10 +27,17 @@ class RecipeServiceImplTest {
     @Mock
     RecipeRepository recipeRepository;
 
+    @Mock
+    RecipeToRecipeCommand recipeToRecipeCommand;
+
+    @Mock
+    RecipeCommandToRecipe recipeCommandToRecipe;
+
+
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        recipeService = new RecipeServiceImpl(recipeRepository);
+        recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
     }
 
     @Test
