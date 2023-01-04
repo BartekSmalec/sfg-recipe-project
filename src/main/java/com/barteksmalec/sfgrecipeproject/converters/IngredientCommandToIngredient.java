@@ -17,17 +17,17 @@ public class IngredientCommandToIngredient implements Converter<IngredientComman
     }
 
     @Nullable
-    @Synchronized
     @Override
     public Ingredient convert(IngredientCommand source) {
-        if (source == null) return null;
+        if (source == null) {
+            return null;
+        }
 
-        Ingredient ingredient = new Ingredient();
-        ingredient.setId(source.getId());
+        final Ingredient ingredient = new Ingredient();
         ingredient.setId(source.getId());
         ingredient.setAmount(source.getAmount());
         ingredient.setDescription(source.getDescription());
         ingredient.setUom(uomConverter.convert(source.getUnitOfMeasure()));
-        return null;
+        return ingredient;
     }
 }
