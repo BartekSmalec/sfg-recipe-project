@@ -1,6 +1,8 @@
 package com.barteksmalec.sfgrecipeproject.model;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 
