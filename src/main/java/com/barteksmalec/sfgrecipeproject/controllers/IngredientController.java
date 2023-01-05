@@ -1,6 +1,8 @@
 package com.barteksmalec.sfgrecipeproject.controllers;
 
 import com.barteksmalec.sfgrecipeproject.commands.IngredientCommand;
+import com.barteksmalec.sfgrecipeproject.commands.RecipeCommand;
+import com.barteksmalec.sfgrecipeproject.commands.UnitOfMeasureCommand;
 import com.barteksmalec.sfgrecipeproject.services.IngredientService;
 import com.barteksmalec.sfgrecipeproject.services.RecipeService;
 import com.barteksmalec.sfgrecipeproject.services.UnitOfMeasureService;
@@ -52,5 +54,19 @@ public class IngredientController {
     public String saveOrUpdate(@ModelAttribute IngredientCommand command){
         IngredientCommand savedCommand = ingredientService.saveIngredientCommand(command);
         return "redirect:/recipe/" + savedCommand.getRecipeId()  + "/ingredient/" + savedCommand.getId() + "/show" ;
+    }
+
+    @GetMapping
+    @RequestMapping("recipe/{recipeId}/ingredient/new")
+    public String newRecipe(@PathVariable String recipeId, Model model){
+        RecipeCommand recipeCommand =  recipeService.findCommandById(Long.valueOf(recipeId));
+
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(Long.valueOf(recipeId));
+        model.addAttribute("ingredient", ingredientCommand);
+
+        ingredientCommand.setUom(new UnitOfMeasureCommand());
+        model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
+        return "recipe/ingredient/ingredientform";
     }
 }
