@@ -3,6 +3,7 @@ package com.barteksmalec.sfgrecipeproject.services;
 import com.barteksmalec.sfgrecipeproject.commands.RecipeCommand;
 import com.barteksmalec.sfgrecipeproject.converters.RecipeCommandToRecipe;
 import com.barteksmalec.sfgrecipeproject.converters.RecipeToRecipeCommand;
+import com.barteksmalec.sfgrecipeproject.exceptions.NotFoundException;
 import com.barteksmalec.sfgrecipeproject.model.Recipe;
 import com.barteksmalec.sfgrecipeproject.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +40,7 @@ public class RecipeServiceImpl implements RecipeService {
     public Recipe findById(Long id) {
         Optional<Recipe> optionalRecipe = recipeRepository.findById(id);
 
-        if (!optionalRecipe.isPresent()) throw new RuntimeException("Recipe not found");
+        if (!optionalRecipe.isPresent()) throw new NotFoundException("Recipe not found");
 
         return optionalRecipe.get();
     }
